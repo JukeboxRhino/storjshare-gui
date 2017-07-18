@@ -79,7 +79,7 @@ module.exports = {
                 <th>Uptime</th>
                 <th>Restarts</th>
                 <th>Peers</th>
-                <th>Contracts</th>
+                <th>Offers</th>
                 <th>Shared</th>
                 <th>Delta</th>
                 <th>Port</th>
@@ -120,9 +120,9 @@ module.exports = {
                 <td><span v-if="share.isRunning">{{share.meta.uptimeReadable}}</span></td>
                 <td>{{share.meta.numRestarts}}</td>
                 <td>{{share.meta.farmerState.totalPeers}}</td>
-                <td>{{share.meta.farmerState.contractCount}}</td>
+                <td>{{share.meta.farmerState.contractCount}} ({{share.meta.farmerState.dataReceivedCount !== 0 ? Math.ceil(share.meta.farmerState.dataReceivedCount / share.meta.farmerState.contractCount * 100) : 0}}% received)</td>
                 <td>{{share.meta.farmerState.spaceUsed}} ({{share.meta.farmerState.percentUsed}}%)</td>
-                <td v-if="share.meta.farmerState.ntpStatus.status === 2">
+                <td v-if="share.meta.farmerState.ntpStatus && share.meta.farmerState.ntpStatus.status === 2">
                   <b-tooltip content="Your computer clock is out of sync. Consider installing a sync tool such as NetTime">
                     <span class="connection" v-if="share.meta.farmerState.ntpStatus && share.isRunning" v-bind:status="share.meta.farmerState.ntpStatus.status">{{share.meta.farmerState.ntpStatus.delta}}</span>
                   </b-tooltip>

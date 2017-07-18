@@ -45,6 +45,13 @@ class Share {
 
       this.config.storagePath = storPath;
 
+      if (this.config.storageAllocation &&
+          !this.config.storageAllocation.toString().match(
+            /[0-9]+([Tt]|[Mm]|[Gg]|[Kk])?[Bb]/g
+          )) {
+          this.config.storageAllocation = this.config.storageAllocation.toString() + 'B';
+      }
+
       let logPath = path.join(
         homedir(),
         '.config/storjshare/logs'
@@ -98,7 +105,6 @@ class Share {
 
     this.actions.reset = () => {
       this.config = new Proxy(JSON.parse(stripComments(defaultConfig)), this._validator());
-      this.config.storageAllocation = filter.toBytes(this.config.storageAllocation);
       this.actions.clearErrors();
     };
 
